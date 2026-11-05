@@ -26,7 +26,7 @@ Cada tarea tiene:
 */
 
 const tareas = [
-  { nombre: "Ir a la playa", prioridad: 1, completada: false },
+  { nombre: "Ir a la playa", prioridad: 1, completada: true },
   { nombre: "Estudiar JS", prioridad: 2, completada: true },
   { nombre: "Ver películas", prioridad: 3, completada: false }
 ];
@@ -64,9 +64,6 @@ function mostrarTareas(lista) {
   }
 }
 
-mostrarTareas(tareas);
-
-
 /*
 TODO 2: Listo
 Crear una función flecha que retorne
@@ -77,18 +74,13 @@ const obtenerCompletadas = (lista) => {
 
   /*El metodo filter crea un arreglo nuevo a partir de filter tareas donde solo 
   nos regresara las que cumplan la condicion de completada === true*/
-  const tareasCompletadas = tareas.filter(tarea => tarea.completada);
-
-  console.log("Tareas completadas");
-  console.log("");
+  const tareasCompletadas = lista.filter(tarea => tarea.completada);
 
   return tareasCompletadas;
 };
-console.log(obtenerCompletadas(tareas));
-
 
 /*
-TODO 3:
+TODO 3: Listo
 Crear una función flecha que retorne
 solo las tareas pendientes.
 Usar filter.
@@ -96,36 +88,36 @@ Usar filter.
 const obtenerPendientes = (lista) => {
   /*El metodo filter crea un arreglo nuevo a partir de filter tareas donde solo 
   nos regresara las que cumplan la condicion de completada === false*/
-  const tareasPendientes = tareas.filter(tarea => !tarea.completada);
-
-  console.log("Tareas pendientes");
-  console.log("");
+  const tareasPendientes = lista.filter(tarea => !tarea.completada);
 
   return tareasPendientes;
   
 };
-console.log(obtenerPendientes(tareas));
-
 
 /*
-TODO 4:
+TODO 4: Listo
 Crear una función flecha que retorne
 solo los nombres de las tareas.
 Usar map.
 */
 const obtenerNombres = (lista) => {
-  
+  /*map() crea una lista unicamente con los atributos que se desean mostrar y (tarea => tarea.nombre) 
+  tarea es el elemento de la lista y lo que esta despues de => tarea.nombre es el atributo que se mostrara*/
+  const nombresTareas = lista.map(tarea => tarea.nombre);
+
+  return nombresTareas;
 };
 
-
 /*
-TODO 5:
+TODO 5: Listo
 Crear una función que retorne
 el total de tareas.
 */
 function contarTareas(lista) {
-  
+  /*tamaño de la lista*/
+  return lista.length;
 }
+
 
 
 // =====================================
@@ -133,7 +125,7 @@ function contarTareas(lista) {
 // =====================================
 
 /*
-TODO 6:
+TODO 6: Listo
 Completar los métodos usando this.tareas
 
 - mostrarTareas: debe llamar a la función mostrarTareas
@@ -144,16 +136,21 @@ Completar los métodos usando this.tareas
 const sistema = {
   tareas: tareas,
 
+  /*this.tarea es la lista tareas que se declara dentro de const sistema
+  y el valor de this.tareas es la lista tareas al inicio de esta clase*/
   mostrarTareas: function() {
-    
+    //metodo implementado anteriormente
+    mostrarTareas(this.tareas);
   },
 
   mostrarCompletadas: function() {
-    
+    //metodo implementado anteriormente
+    return obtenerCompletadas(this.tareas);
   },
 
   mostrarPendientes: function() {
-    
+    //metodo implementado anteriormente
+    return obtenerPendientes(this.tareas);
   }
 };
 
@@ -163,7 +160,7 @@ const sistema = {
 // =====================================
 
 /*
-TODO 7:
+TODO 7: Listo
 
 - Si el arreglo tareas está vacío:
   mostrar "No hay tareas"
@@ -172,13 +169,27 @@ TODO 7:
   mostrar "Todas las tareas completadas"
 */
 
+/*Si el tamaño de this.tareas de sistema es igual a 0 entonces esta vacia
+y no hay tareas */
+if (sistema.tareas.length===0) {
+  console.log("No hay tareas")
+}
+
+/*Si el metodo mostrarCompletadas() de sistema que llama a su vez a obtener
+completadas que regresa una lista con solo las tareas completadas, y el tamaño
+de esta lista con tareas completadas es igual al tamaño de la lista de tareas
+significa que todas las tareas estan completadas*/
+if (sistema.mostrarCompletadas().length === sistema.tareas.length) {
+  console.log("Todas las tareas completadas")
+}
+
 
 // =====================================
 // 5. Switch
 // =====================================
 
 /*
-TODO 8:
+TODO 8: Listo
 
 Usar la variable opcion para ejecutar:
 
@@ -188,19 +199,22 @@ Usar la variable opcion para ejecutar:
 default -> mostrar "Opción inválida"
 */
 
-const opcion = 1;
+/*Modificar opcion para ir cambiando de funcion*/
+const opcion = 2;
 
 switch (opcion) {
   case 1:
-    
+    sistema.mostrarTareas();
     break;
 
   case 2:
-    
+    console.log("Tareas completadas: ");
+    console.log(sistema.mostrarCompletadas());
     break;
 
   case 3:
-    
+    console.log("Tareas pendientes: ");
+    console.log(sistema.mostrarPendientes());
     break;
 
   default:
@@ -213,8 +227,26 @@ switch (opcion) {
 // =====================================
 
 /*
-TODO 9:
+TODO 9: Listo
 
 Llamar funciones para comprobar que todo funciona correctamente.
 Usar console.log donde sea necesario.
+*/
+
+/*
+mostrarTareas(tareas);
+console.log("");
+console.log("Tareas completadas: ");
+console.log("");
+console.log(obtenerCompletadas(tareas));
+console.log("");
+console.log("Tareas pendientes: ");
+console.log("");
+console.log(obtenerPendientes(tareas));
+console.log("");
+console.log("Tareas por nombres: ");
+console.log("");
+console.log(obtenerNombres(tareas));
+console.log("");
+console.log("Total de tareas: " + contarTareas(tareas));
 */
